@@ -7,7 +7,7 @@ const auth = require('./jwt.routes')
 router.get('/', auth,
   async (req, res) => {
     try {
-      const users = await Users.find()
+      const users = await Users.find({ owner: req.user.userId })
       res.json(users)
     }
     catch (err) {
@@ -26,7 +26,7 @@ router.post('/add', auth,
       });
 
       await newUser.save()
-      const users = await Users.find()
+      const users = await Users.find({ owner: req.user.userId })
 
       res.json(users)
       // res.json('User added!')
@@ -40,7 +40,7 @@ router.delete('/:id', auth,
   async (req, res) => {
     try {
       await Users.findByIdAndDelete(req.params.id)
-      const users = await Users.find()
+      const users = await Users.find({ owner: req.user.userId })
 
       res.json(users)
       res.json('User deleted.')

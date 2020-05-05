@@ -81,7 +81,13 @@ router.post('/login',
         process.env.JWTSECRET,
         { expiresIn: '1h' }
       )
-      res.header('authToken', token).send(token)
+
+      const authData = {
+        token,
+        userId: user._id
+      }
+
+      res.header('authToken', token).send(authData)
 
       // res.json({ token, userId: user._id });
 
