@@ -84,7 +84,8 @@ router.post('/login',
 
       const authData = {
         token,
-        userId: user._id
+        userId: user._id,
+        email
       }
 
       res.header('authToken', token).send(authData)
