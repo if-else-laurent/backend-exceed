@@ -78,7 +78,7 @@ router.post('/login',
 
       const token = jwt.sign(
         { userId: user._id },
-        process.env.JWTSECRET,
+        process.env.JWTSECRET || 'randomword',
         { expiresIn: '1h' }
       )
 

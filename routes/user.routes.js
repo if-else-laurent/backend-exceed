@@ -37,6 +37,43 @@ router.post('/add', auth,
     }
   })
 
+router.post('/:id/edit', auth,
+  async (req, res) => {
+    try {
+      const editedUser = req.body
+      console.log(editedUser)
+      const {
+        name,
+        username,
+        email,
+        address,
+        phone,
+        website,
+        company,
+      } = editedUser
+
+      await Users.findByIdAndUpdate(editedUser._id, {
+        name,
+        username,
+        email,
+        address,
+        phone,
+        website,
+        company,
+      })
+
+
+      // await newUser.save()
+      const users = await Users.find({ owner: req.user.userId })
+
+      res.json(users)
+      // res.json('User added!')
+    }
+    catch (err) {
+      res.status(400).json('Error: ' + err)
+    }
+  })
+
 router.delete('/:id', auth,
   async (req, res) => {
     try {
